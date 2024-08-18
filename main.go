@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 
 	"strings"
@@ -28,14 +28,14 @@ func main() {
 	var buff []byte
 	var err error
 	if *xmlPath != "" {
-		buff, err = ioutil.ReadFile(*xmlPath)
+		buff, err = os.ReadFile(*xmlPath)
 		if err != nil {
-			fmt.Printf("%s\n", err)
+			fmt.Printf("an error is occured in os.ReadFile() %s\n", err.Error())
 			os.Exit(1)
 		}
 	} else {
 		// Otherwise, try loading from standard input
-		buff, err = ioutil.ReadAll(os.Stdin)
+		buff, err = io.ReadAll(os.Stdin)
 		if err != nil {
 			fmt.Println("Error occured while reading from standard input")
 			os.Exit(1)
